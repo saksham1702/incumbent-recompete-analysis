@@ -1,0 +1,231 @@
+cache: /__modal/volumes/vo-1nCEdwumGcm7JUOf4EuTdb/slim_v2 | scratch: /tmp/govcon
+297 columns, sampled 20,000 rows from FY2025_075_Contracts_Full_20260806.zip
+
+who won it         recipient_uei, recipient_duns, recipient_name, recipient_name_raw, recipient_doing_business_as_name, recipient_parent_uei, recipient_parent_duns, reci
+what was bought    product_or_service_code, product_or_service_code_description, naics_code, naics_description, country_of_product_or_service_origin_code, country_of_pro
+who bought it      awarding_agency_code, awarding_agency_name, awarding_sub_agency_code, awarding_sub_agency_name, awarding_office_code, awarding_office_name
+how much           federal_action_obligation, current_total_value_of_award, potential_total_value_of_award
+when               action_date, period_of_performance_start_date, period_of_performance_current_end_date, period_of_performance_potential_end_date
+what kind          award_or_idv_flag, award_type_code, award_type, type_of_contract_pricing_code, type_of_contract_pricing, extent_competed_code, extent_competed, parent
+which contract     award_id_piid, modification_number, parent_award_id_piid, parent_award_modification_number
+Trap 1 - which half of each pair holds the words is not consistent:
+  type_of_contract_pricing_code    -> 'FIRM FIXED PRICE'
+  type_of_contract_pricing         -> 'J'
+  extent_competed_code             -> 'FULL AND OPEN COMPETITION'
+  extent_competed                  -> 'A'
+  award_type_code                  -> 'D'
+  award_type                       -> 'DEFINITIVE CONTRACT'
+  other_than_full_and_open_competition_code -> 'SP2'
+  other_than_full_and_open_competition -> 'SAP NON-COMPETITION (FAR 13)'
+
+Trap 2 - only 32.0% of rows are original awards; the rest are modifications
+Trap 3 - 55.8% of rows are orders under an existing vehicle
+
+Trap 4 - vendor id coverage:  UEI 100.0%   DUNS 0.0%
+keeping 25 of 297 columns
+
+cache: 65/65 agency-years
+cache complete
+52,291,783 base awards read from 65 agency-years
+vendor key coverage: 100.00%
+861,310 awards >= $250,000 with a usable vendor and date
+
+by contract type:
+population
+order under vehicle    549563
+standalone             186042
+vehicle (IDV)          125705
+
+headline population - standalone contracts: 186,042
+agency
+Army         55082
+Navy         37448
+Air Force    33920
+VA           28895
+HHS          14833
+DHS           9906
+GSA           5958
+65 cached files, 52,291,783 base awards, 2226 MB on disk
+
+    file  rows  MB
+DHS_2013 35605 2.2
+DHS_2014 36165 2.3
+DHS_2015 36342 2.3
+DHS_2016 36536 2.4
+DHS_2017 36827 2.5
+DHS_2018 32323 2.3
+DHS_2019 25140 1.8
+DHS_2020 23977 1.8
+... and 57 more
+
+Sample of the awards being analysed:
+agency action_date       recipient_parent_name product_or_service_code        value
+  Army  2013-09-30        IBK CAPITAL SDN  BHD                    Y1HC 3.545905e+10
+  Army  2013-05-14         HYOSUNG CORPORATION                    Y1AA 3.129742e+10
+  Army  2013-09-26 SEOHEE CONSTRUCTION CO.,LTD                    Y1DA 2.696658e+10
+  Navy  2017-02-14       GENERAL DYNAMICS CORP                    1905 2.409772e+10
+  Navy  2017-09-21       GENERAL DYNAMICS CORP                    1905 2.278029e+10 
+
+Awards over $250K by agency and fiscal year:
+fy         2013  2014  2015  2016  2017  2018  2019  2020  2021  2022  2023  2024  2025
+agency                                                                                 
+Air Force  2242  2296  2251  2381  2350  2442  2692  2951  2682  3010  2829  2902  2892
+Army       4294  4556  4386  4352  4396  4554  4481  4839  3991  4041  3966  3828  3398
+DHS         517   577   614   695   800  1006   847   905   772   741   906   799   727
+GSA         456   530   619   582   621   600   505   410   366   310   350   337   272
+HHS         801   914   860   933   948   984  1120  1484  1529  1500  1537  1291   932
+Navy       2662  2809  2734  2722  2671  2795  2818  2727  2612  2917  3279  3382  3320
+VA         1845  1403  1251  1446  1981  2436  2535  2671  2687  2723  2968  2645  2304 
+
+Contract value ($M):
+count    186042.00
+mean         10.87
+std         224.00
+min           0.25
+50%           0.86
+90%           7.41
+99%         112.62
+max       35459.05 
+
+How the work was competed:
+extent_competed_code
+COMPETED UNDER SAP                                      37907
+FULL AND OPEN COMPETITION AFTER EXCLUSION OF SOURCES    37888
+NOT AVAILABLE FOR COMPETITION                           31127
+NOT COMPETED                                            30849
+FULL AND OPEN COMPETITION                               27432
+NOT COMPETED UNDER SAP                                  20839 
+
+Most common product/service codes:
+product_or_service_code  product_or_service_code_description                                              
+R499                     SUPPORT- PROFESSIONAL: OTHER                                                         4958
+6515                     MEDICAL AND SURGICAL INSTRUMENTS, EQUIPMENT, AND SUPPLIES                            4945
+Z2AA                     REPAIR OR ALTERATION OF OFFICE BUILDINGS                                             3466
+AD92                     R&D- DEFENSE OTHER: OTHER (APPLIED RESEARCH/EXPLORATORY DEVELOPMENT)                 3294
+AC12                     NATIONAL DEFENSE R&D SERVICES; DEPARTMENT OF DEFENSE - MILITARY; APPLIED RESEARCH    3282
+AC32                     NATIONAL DEFENSE R&D SERVICES; DEFENSE-RELATED ACTIVITIES; APPLIED RESEARCH          2776
+R425                     SUPPORT- PROFESSIONAL: ENGINEERING/TECHNICAL                                         2521
+6640                     LABORATORY EQUIPMENT AND SUPPLIES                                                    2357
+                                                   step   awards  share
+Base awards downloaded (modifications already excluded) 52291783 100.0%
+                          In the seven agencies studied 14282706  27.3%
+                  Usable vendor and date, over $250,000   186042   0.4%
+
+0.4% of base awards survive to the analysis
+109,208 award events
+14,228 successor-matched recompetes (headline)
+35,646 consecutive pairs (sensitivity)
+OVERALL: 41.7% of recompetes stay with the incumbent (n=14,228)
+
+   agency  n_recompetes  n_retained  retention_rate  ci_low  ci_high
+      DHS           702         365           0.520   0.483    0.557
+Air Force          2358        1055           0.447   0.427    0.468
+      HHS           886         392           0.442   0.410    0.475
+       VA          2173         925           0.426   0.405    0.447
+     Army          4846        1985           0.410   0.396    0.424
+      GSA           359         144           0.401   0.352    0.453
+     Navy          2904        1071           0.369   0.351    0.387
+
+Sensitivity - all consecutive pairs, no successor linkage (overall 32.1%, n=35,646):
+   agency  n_recompetes  n_retained  retention_rate  ci_low  ci_high
+      DHS          1627         623           0.383   0.360    0.407
+Air Force          5524        1919           0.347   0.335    0.360
+       VA          5439        1759           0.323   0.311    0.336
+     Army         12311        3946           0.321   0.312    0.329
+      HHS          2423         766           0.316   0.298    0.335
+      GSA           891         269           0.302   0.273    0.333
+     Navy          7431        2157           0.290   0.280    0.301
+
+By whether the follow-on was actually competed:
+was_competed     n  retention
+not competed 10694      0.455
+    competed  3534      0.304
+
+Competed follow-ons only - the strictest read of the question (30.4%, n=3,534):
+   agency  n_recompetes  n_retained  retention_rate  ci_low  ci_high
+      HHS           187          75           0.401   0.333    0.473
+Air Force           537         183           0.341   0.302    0.382
+     Navy           523         168           0.321   0.283    0.362
+     Army          1488         444           0.298   0.276    0.322
+      GSA            84          24           0.286   0.200    0.390
+      DHS            94          26           0.277   0.196    0.374
+       VA           621         153           0.246   0.214    0.282
+  vehicle (IDV): 125,705 awards, 0 recompetes - not reported. 0% of these awards carry a potential end date, which is what the successor match needs.
+Retention by what kind of contract is being recompeted:
+         population  awards  recompetes  retention  has_end_date
+         standalone  186042       14228      0.417         1.000
+order under vehicle  549563       35518      0.716         1.000
+1,087 award events are labelled a follow-on by FPDS itself
+our matching links 14.9% of them to a predecessor
+
+This is a floor on recall, not a ceiling: FPDS only applies the label to 
+sole-source follow-ons, so competed recompetes are never labelled and cannot 
+be checked this way.
+band       <$5M  $5-25M  >$25M
+agency                        
+Air Force 44.0%   46.6%  50.4%
+Army      41.9%   37.0%  41.4%
+DHS       52.9%   43.7%    NaN
+GSA       39.7%   36.4%    NaN
+HHS       43.5%   46.4%  54.5%
+Navy      35.4%   43.0%  42.0%
+VA        42.0%   49.1%    NaN
+reference levels: agency=Army, pricing=Fixed Price
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                      y   No. Observations:                14228
+Model:                          Logit   Df Residuals:                    14218
+Method:                           MLE   Df Model:                            9
+Date:                Wed, 02 Sep 2026   Pseudo R-squ.:                0.004117
+Time:                        15:02:31   Log-Likelihood:                -9626.7
+converged:                       True   LL-Null:                       -9666.5
+Covariance Type:            nonrobust   LLR p-value:                 1.947e-13
+============================================================================================================================
+                                                               coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------------------
+Intercept                                                   -0.8374      0.182     -4.603      0.000      -1.194      -0.481
+C(family, Treatment("Fixed Price"))[T.Cost Plus]            -0.0602      0.083     -0.724      0.469      -0.223       0.103
+C(family, Treatment("Fixed Price"))[T.T&M / Labor Hours]     0.1429      0.150      0.954      0.340      -0.151       0.437
+C(agency, Treatment("Army"))[T.Air Force]                    0.1577      0.051      3.107      0.002       0.058       0.257
+C(agency, Treatment("Army"))[T.DHS]                          0.4485      0.081      5.507      0.000       0.289       0.608
+C(agency, Treatment("Army"))[T.GSA]                         -0.0317      0.112     -0.284      0.776      -0.251       0.187
+C(agency, Treatment("Army"))[T.HHS]                          0.1349      0.075      1.792      0.073      -0.013       0.283
+C(agency, Treatment("Army"))[T.Navy]                        -0.1634      0.049     -3.365      0.001      -0.259      -0.068
+C(agency, Treatment("Army"))[T.VA]                           0.0858      0.053      1.620      0.105      -0.018       0.190
+log_value                                                    0.0744      0.028      2.628      0.009       0.019       0.130
+============================================================================================================================
+
+Odds ratios (>1 favours the incumbent):
+                                                           coef  odds_ratio  p_value
+Intercept                                                -0.837       0.433    0.000
+C(family, Treatment("Fixed Price"))[T.Cost Plus]         -0.060       0.942    0.469
+C(family, Treatment("Fixed Price"))[T.T&M / Labor Hours]  0.143       1.154    0.340
+C(agency, Treatment("Army"))[T.Air Force]                 0.158       1.171    0.002
+C(agency, Treatment("Army"))[T.DHS]                       0.448       1.566    0.000
+C(agency, Treatment("Army"))[T.GSA]                      -0.032       0.969    0.776
+C(agency, Treatment("Army"))[T.HHS]                       0.135       1.144    0.073
+C(agency, Treatment("Army"))[T.Navy]                     -0.163       0.849    0.001
+C(agency, Treatment("Army"))[T.VA]                        0.086       1.090    0.105
+log_value                                                 0.074       1.077    0.009
+Sensitivity ladder - how the definition of a recompete moves the answer:
+                 grouping  n_consecutive  consecutive  n_nearest  nearest  n_unambiguous  unambiguous
+agency + PSC (as briefed)          21098        0.220       9711    0.269           7216        0.274
+     + contracting office          40791        0.284      18561    0.374          15136        0.380
+                  + NAICS          35646        0.321      16775    0.410          14228        0.417
+
+Spot check - ['HHS', '75D301', 'R604', '325412']
+      date                names        value  n_awards          piids                                      psc_desc
+2022-08-02 MCKESSON CORPORATION 1.554330e+09         1 75D30122C14691 SUPPORT- ADMINISTRATIVE: MAILING/DISTRIBUTION
+2023-09-27 MCKESSON CORPORATION 8.115420e+09         1 75D30123C17978 SUPPORT- ADMINISTRATIVE: MAILING/DISTRIBUTION
+
+Years between consecutive awards:
+count    14228.000000
+mean         2.342325
+std          1.673600
+min          0.495551
+10%          0.761123
+25%          0.999316
+50%          1.686516
+75%          3.488706
+90%          5.021218
+max         12.763860

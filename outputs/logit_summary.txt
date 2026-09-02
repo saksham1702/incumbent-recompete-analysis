@@ -1,0 +1,37 @@
+reference levels: agency=Army, pricing=Fixed Price
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                      y   No. Observations:                14228
+Model:                          Logit   Df Residuals:                    14218
+Method:                           MLE   Df Model:                            9
+Date:                Wed, 02 Sep 2026   Pseudo R-squ.:                0.004117
+Time:                        15:02:31   Log-Likelihood:                -9626.7
+converged:                       True   LL-Null:                       -9666.5
+Covariance Type:            nonrobust   LLR p-value:                 1.947e-13
+============================================================================================================================
+                                                               coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------------------
+Intercept                                                   -0.8374      0.182     -4.603      0.000      -1.194      -0.481
+C(family, Treatment("Fixed Price"))[T.Cost Plus]            -0.0602      0.083     -0.724      0.469      -0.223       0.103
+C(family, Treatment("Fixed Price"))[T.T&M / Labor Hours]     0.1429      0.150      0.954      0.340      -0.151       0.437
+C(agency, Treatment("Army"))[T.Air Force]                    0.1577      0.051      3.107      0.002       0.058       0.257
+C(agency, Treatment("Army"))[T.DHS]                          0.4485      0.081      5.507      0.000       0.289       0.608
+C(agency, Treatment("Army"))[T.GSA]                         -0.0317      0.112     -0.284      0.776      -0.251       0.187
+C(agency, Treatment("Army"))[T.HHS]                          0.1349      0.075      1.792      0.073      -0.013       0.283
+C(agency, Treatment("Army"))[T.Navy]                        -0.1634      0.049     -3.365      0.001      -0.259      -0.068
+C(agency, Treatment("Army"))[T.VA]                           0.0858      0.053      1.620      0.105      -0.018       0.190
+log_value                                                    0.0744      0.028      2.628      0.009       0.019       0.130
+============================================================================================================================
+
+Odds ratios (>1 favours the incumbent):
+                                                              coef  odds_ratio       p_value
+Intercept                                                -0.837411    0.432830  4.169506e-06
+C(family, Treatment("Fixed Price"))[T.Cost Plus]         -0.060196    0.941580  4.691524e-01
+C(family, Treatment("Fixed Price"))[T.T&M / Labor Hours]  0.142898    1.153613  3.403291e-01
+C(agency, Treatment("Army"))[T.Air Force]                 0.157665    1.170774  1.889977e-03
+C(agency, Treatment("Army"))[T.DHS]                       0.448454    1.565890  3.643997e-08
+C(agency, Treatment("Army"))[T.GSA]                      -0.031730    0.968768  7.764307e-01
+C(agency, Treatment("Army"))[T.HHS]                       0.134950    1.144480  7.311095e-02
+C(agency, Treatment("Army"))[T.Navy]                     -0.163446    0.849212  7.641959e-04
+C(agency, Treatment("Army"))[T.VA]                        0.085785    1.089572  1.051583e-01
+log_value                                                 0.074436    1.077277  8.600120e-03
